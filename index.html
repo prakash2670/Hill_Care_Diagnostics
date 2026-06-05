@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hill Care Diagnostic – Hyderabad | Home Sample Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ──────────────────────────────────────────────── */
+    :root {
+      --teal:       #0b5e65;
+      --teal-mid:   #127d86;
+      --teal-light: #3db8bf;
+      --accent:     #f4845f;
+      --accent2:    #e8c547;
+      --bg:         #f5f7f6;
+      --white:      #ffffff;
+      --ink:        #1a2c2e;
+      --muted:      #607175;
+      --radius:     14px;
+      --shadow:     0 8px 32px rgba(11,94,101,.12);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; }
+    img { display:block; max-width:100%; }
+    a { text-decoration:none; color:inherit; }
+
+    /* ─── UTILITIES ───────────────────────────────────────────── */
+    .container { max-width:1160px; margin:0 auto; padding:0 24px; }
+    .section    { padding:84px 0; }
+    .tag { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:5px 14px; border-radius:50px; }
+
+    /* ─── ANNOUNCEMENT BAR ────────────────────────────────────── */
+    .announce {
+      background: var(--accent);
+      color:#fff;
+      text-align:center;
+      padding:10px 16px;
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:.02em;
+    }
+    .announce span { margin:0 16px; opacity:.7; }
+
+    /* ─── HEADER ──────────────────────────────────────────────── */
+    header {
+      background:var(--teal);
+      position:sticky; top:0; z-index:200;
+      box-shadow:0 2px 20px rgba(0,0,0,.25);
+    }
+    .nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0; gap:16px; flex-wrap:wrap;
+    }
+    .logo-wrap { display:flex; align-items:center; gap:12px; }
+    .logo-icon {
+      width:44px; height:44px; border-radius:12px;
+      background:var(--accent); display:flex; align-items:center;
+      justify-content:center; font-size:22px;
+    }
+    .logo-text { color:#fff; }
+    .logo-text strong { font-size:20px; font-weight:800; display:block; line-height:1.1; }
+    .logo-text small { font-size:11px; opacity:.7; font-weight:400; }
+
+    .nav-badges { display:flex; gap:8px; flex-wrap:wrap; }
+    .badge-iso {
+      background:rgba(255,255,255,.13);
+      color:#fff; font-size:11px; font-weight:700;
+      padding:5px 10px; border-radius:8px;
+      border:1px solid rgba(255,255,255,.25);
+      white-space:nowrap;
+    }
+    .badge-iso .check { color:var(--accent2); margin-right:4px; }
+
+    .call-btn {
+      background:var(--accent); color:#fff;
+      padding:12px 22px; border-radius:50px;
+      font-weight:700; font-size:14px;
+      display:flex; align-items:center; gap:8px;
+      white-space:nowrap;
+      transition:transform .2s, box-shadow .2s;
+      box-shadow:0 4px 14px rgba(244,132,95,.45);
+    }
+    .call-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(244,132,95,.55); }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 55%, #0e8f8f 100%);
+      color:#fff;
+      padding:88px 0 80px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(61,184,191,.18) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .hero-inner { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; position:relative; }
+    .hero-label {
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.3);
+      color:#fff; font-size:12px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      padding:6px 14px; border-radius:50px; display:inline-flex;
+      align-items:center; gap:8px; margin-bottom:18px;
+    }
+    .hero-label::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--accent2); display:block; }
+    .hero h1 {
+      font-family:'DM Serif Display', serif;
+      font-size:clamp(32px, 4vw, 52px);
+      line-height:1.15;
+      margin-bottom:20px;
+    }
+    .hero h1 em { color:var(--accent2); font-style:italic; }
+    .hero p { font-size:16px; opacity:.88; margin-bottom:32px; max-width:430px; }
+
+    .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn {
+      padding:14px 28px; border-radius:50px; font-weight:700;
+      font-size:15px; display:inline-flex; align-items:center;
+      gap:8px; transition:transform .2s, box-shadow .2s;
+      cursor:pointer;
+    }
+    .btn-accent { background:var(--accent); color:#fff; box-shadow:0 4px 16px rgba(244,132,95,.4); }
+    .btn-accent:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(244,132,95,.55); }
+    .btn-outline { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.6); }
+    .btn-outline:hover { background:rgba(255,255,255,.12); }
+
+    .hero-stats { display:flex; gap:28px; margin-top:40px; flex-wrap:wrap; }
+    .stat { border-left:3px solid var(--teal-light); padding-left:14px; }
+    .stat strong { display:block; font-size:26px; font-weight:800; line-height:1; }
+    .stat span { font-size:12px; opacity:.7; text-transform:uppercase; letter-spacing:.06em; }
+
+    /* Hero card mockup */
+    .hero-visual { display:flex; flex-direction:column; gap:16px; }
+    .hv-card {
+      background:rgba(255,255,255,.1);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:16px; padding:20px 22px;
+      display:flex; align-items:center; gap:16px;
+      transition:transform .3s;
+    }
+    .hv-card:hover { transform:translateX(-6px); }
+    .hv-icon {
+      width:52px; height:52px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:26px; flex-shrink:0;
+    }
+    .hv-card h4 { font-size:15px; font-weight:700; margin-bottom:3px; }
+    .hv-card p  { font-size:13px; opacity:.75; }
+    .hv-card .price-tag {
+      margin-left:auto; font-size:18px; font-weight:800;
+      color:var(--accent2); white-space:nowrap;
+    }
+
+    /* ─── ISO BANNER ─────────────────────────────────────────── */
+    .iso-banner {
+      background: linear-gradient(90deg, #0b4a50 0%, var(--teal) 50%, #0b4a50 100%);
+      color:#fff;
+      padding:28px 0;
+    }
+    .iso-inner {
+      display:flex; align-items:center; justify-content:center;
+      gap:40px; flex-wrap:wrap;
+    }
+    .iso-badge {
+      display:flex; align-items:center; gap:14px;
+      background:rgba(255,255,255,.08);
+      border:1.5px solid rgba(255,255,255,.2);
+      border-radius:16px; padding:14px 24px;
+    }
+    .iso-badge .shield { font-size:36px; }
+    .iso-badge .iso-text strong { display:block; font-size:18px; font-weight:800; letter-spacing:.04em; }
+    .iso-badge .iso-text span { font-size:12px; opacity:.75; }
+    .iso-divider { width:1px; height:50px; background:rgba(255,255,255,.2); }
+    .iso-points { display:flex; flex-direction:column; gap:6px; }
+    .iso-points li { list-style:none; font-size:14px; display:flex; align-items:center; gap:8px; }
+    .iso-points li::before { content:'✓'; color:var(--accent2); font-weight:800; }
+
+    /* ─── WHY US ──────────────────────────────────────────────── */
+    .why-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:24px; margin-top:48px;
+    }
+    .why-card {
+      background:var(--white); border-radius:var(--radius);
+      padding:28px 24px; box-shadow:var(--shadow);
+      border-top:4px solid var(--teal-light);
+      transition:transform .25s;
+    }
+    .why-card:hover { transform:translateY(-5px); }
+    .why-card .icon { font-size:36px; margin-bottom:14px; }
+    .why-card h3 { font-size:16px; font-weight:700; color:var(--teal); margin-bottom:8px; }
+    .why-card p  { font-size:14px; color:var(--muted); }
+
+    /* ─── PACKAGES ────────────────────────────────────────────── */
+    .packages-section { background:var(--bg); }
+    .pkg-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:24px; margin-top:48px;
+    }
+    .pkg {
+      background:var(--white); border-radius:var(--radius);
+      padding:28px 24px; box-shadow:var(--shadow);
+      display:flex; flex-direction:column;
+      border:2px solid transparent;
+      transition:transform .25s, border-color .25s;
+      position:relative; overflow:hidden;
+    }
+    .pkg:hover { transform:translateY(-6px); border-color:var(--teal-light); }
+    .pkg.featured { border-color:var(--accent); }
+    .pkg.featured::before {
+      content:'Most Popular';
+      position:absolute; top:16px; right:-28px;
+      background:var(--accent); color:#fff;
+      font-size:11px; font-weight:800; letter-spacing:.06em;
+      padding:5px 36px; transform:rotate(30deg);
+      text-transform:uppercase;
+    }
+    .pkg-name { font-size:18px; font-weight:800; color:var(--teal); margin-bottom:6px; }
+    .pkg-price { display:flex; align-items:baseline; gap:8px; margin:12px 0; }
+    .pkg-price strong { font-size:30px; font-weight:800; color:var(--ink); }
+    .pkg-price s { font-size:16px; color:#bbb; }
+    .pkg-save {
+      background:var(--teal); color:#fff;
+      font-size:11px; font-weight:700; padding:3px 9px;
+      border-radius:50px; margin-left:4px;
+    }
+    .pkg-tests { font-size:12px; color:var(--muted); margin-bottom:16px; }
+    .pkg ul { list-style:none; flex:1; margin-bottom:22px; }
+    .pkg ul li {
+      padding:7px 0; border-bottom:1px solid #f1f3f2;
+      font-size:14px; display:flex; gap:8px; align-items:flex-start;
+    }
+    .pkg ul li::before { content:'✓'; color:var(--teal-light); font-weight:800; flex-shrink:0; margin-top:1px; }
+    .pkg .pkg-btn {
+      background:var(--teal); color:#fff;
+      padding:12px; border-radius:50px;
+      font-weight:700; text-align:center; font-size:14px;
+      transition:background .2s;
+    }
+    .pkg .pkg-btn:hover { background:var(--teal-mid); }
+    .pkg.featured .pkg-btn { background:var(--accent); }
+    .pkg.featured .pkg-btn:hover { background:#e0674a; }
+
+    /* ─── OFFERS ──────────────────────────────────────────────── */
+    .offers-section {
+      background: linear-gradient(135deg, var(--teal) 0%, #0a7a80 100%);
+      color:#fff;
+    }
+    .offers-section .section-title { color:#fff; }
+    .offers-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:24px; margin-top:48px;
+    }
+    .offer-card {
+      background:rgba(255,255,255,.08);
+      border:1.5px solid rgba(255,255,255,.2);
+      border-radius:var(--radius); padding:30px 26px;
+      text-align:center;
+      transition:background .2s, transform .25s;
+    }
+    .offer-card:hover { background:rgba(255,255,255,.14); transform:translateY(-5px); }
+    .offer-card .oc-icon { font-size:48px; margin-bottom:14px; }
+    .offer-card h3 { font-size:20px; font-weight:800; margin-bottom:6px; }
+    .offer-card .oc-pct { font-size:44px; font-weight:800; color:var(--accent2); line-height:1; margin:10px 0; }
+    .offer-card p { font-size:14px; opacity:.8; margin-bottom:20px; }
+    .offer-card .oc-btn {
+      background:var(--accent); color:#fff;
+      padding:11px 26px; border-radius:50px;
+      font-weight:700; font-size:14px;
+      display:inline-block;
+      transition:transform .2s;
+    }
+    .offer-card .oc-btn:hover { transform:scale(1.04); }
+
+    /* ─── TESTS GRID ─────────────────────────────────────────── */
+    .tests-section { background:var(--white); }
+    .test-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+      gap:14px; margin-top:40px;
+    }
+    .test-cat {
+      background:var(--bg); border-radius:12px;
+      padding:16px 14px;
+      border-left:4px solid var(--teal);
+      transition:box-shadow .2s;
+    }
+    .test-cat:hover { box-shadow:var(--shadow); }
+    .test-cat h4 { font-size:14px; font-weight:700; color:var(--teal); margin-bottom:5px; }
+    .test-cat p  { font-size:13px; color:var(--muted); }
+
+    /* ─── PROCESS ─────────────────────────────────────────────── */
+    .process-section { background:var(--bg); }
+    .process-steps {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:0; margin-top:48px; position:relative;
+    }
+    .step {
+      text-align:center; padding:24px 20px;
+      position:relative;
+    }
+    .step-num {
+      width:52px; height:52px; border-radius:50%;
+      background:var(--teal); color:#fff;
+      font-size:20px; font-weight:800;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 16px;
+    }
+    .step h3 { font-size:15px; font-weight:700; color:var(--teal); margin-bottom:6px; }
+    .step p  { font-size:13px; color:var(--muted); }
+    .step::after {
+      content:'→';
+      position:absolute; right:-10px; top:44px;
+      font-size:24px; color:var(--teal-light);
+    }
+    .step:last-child::after { display:none; }
+
+    /* ─── SECTION TITLE ───────────────────────────────────────── */
+    .section-title {
+      text-align:center;
+      font-family:'DM Serif Display', serif;
+      font-size:clamp(26px, 3vw, 38px);
+      color:var(--teal);
+      margin-bottom:12px;
+    }
+    .section-sub {
+      text-align:center;
+      color:var(--muted);
+      font-size:16px;
+      max-width:560px;
+      margin:0 auto 8px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background:var(--ink);
+      color:#fff;
+      padding:48px 0 28px;
+    }
+    .footer-inner {
+      display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px;
+      margin-bottom:36px;
+    }
+    .footer-brand .logo-text strong { font-size:22px; }
+    .footer-brand p { font-size:14px; opacity:.65; margin-top:12px; line-height:1.7; }
+    .footer-col h4 { font-size:14px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.06em; opacity:.55; margin-bottom:14px; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { font-size:14px; opacity:.8; padding:4px 0; }
+    .footer-col ul li a { opacity:.8; transition:opacity .2s; }
+    .footer-col ul li a:hover { opacity:1; }
+    .footer-bottom {
+      border-top:1px solid rgba(255,255,255,.1);
+      padding-top:20px;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:10px;
+    }
+    .footer-bottom p { font-size:13px; opacity:.5; }
+
+    /* ─── WHATSAPP FLOAT ──────────────────────────────────────── */
+    .wa-float {
+      position:fixed; bottom:24px; right:24px; z-index:300;
+      width:58px; height:58px; border-radius:50%;
+      background:#25d366; color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:30px;
+      box-shadow:0 6px 20px rgba(37,211,102,.45);
+      animation:pulse 2.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow:0 6px 20px rgba(37,211,102,.45); }
+      50%      { box-shadow:0 6px 28px rgba(37,211,102,.7); }
+    }
+
+    /* ─── CALL BAR (bottom mobile) ────────────────────────────── */
+    .call-bar {
+      display:none;
+      position:fixed; bottom:0; left:0; right:0;
+      background:var(--accent); color:#fff;
+      text-align:center; padding:14px;
+      font-weight:700; font-size:16px;
+      z-index:250;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media(max-width:900px) {
+      .hero-inner { grid-template-columns:1fr; }
+      .hero-visual { display:none; }
+      .footer-inner { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:640px) {
+      .section { padding:56px 0; }
+      .iso-inner { flex-direction:column; gap:16px; }
+      .iso-divider { display:none; }
+      .footer-inner { grid-template-columns:1fr; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .call-bar { display:block; }
+      .wa-float { bottom:76px; }
+      .nav-badges { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Announcement -->
+<div class="announce">
+  🎉 SPECIAL: 20% OFF for Women & Senior Citizens &nbsp;<span>|</span>&nbsp; Family Package ₹6999 Only &nbsp;<span>|</span>&nbsp; Free Home Collection Across Hyderabad
+</div>
+
+<!-- Header -->
+<header>
+  <div class="container nav">
+    <div class="logo-wrap">
+      <div class="logo-icon">🏥</div>
+      <div class="logo-text">
+        <strong>Hill Care Diagnostic</strong>
+        <small>Cloud Diagnostic Services · Hyderabad</small>
+      </div>
+    </div>
+
+    <div class="nav-badges">
+      <div class="badge-iso"><span class="check">✔</span> ISO 9001:2015 Certified</div>
+      <div class="badge-iso"><span class="check">✔</span> Central Govt. Registered</div>
+    </div>
+
+    <a href="tel:8142271403" class="call-btn">
+      📞 8142271403
+    </a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-label">Hyderabad's Cloud Diagnostic Service</div>
+      <h1>Lab Tests at Your<br/><em>Doorstep</em></h1>
+      <p>Free home sample collection anywhere in Hyderabad. Reports on WhatsApp within 24 hrs. 1000+ tests available.</p>
+      <div class="hero-ctas">
+        <a href="tel:8142271403" class="btn btn-accent">📞 Book Home Collection</a>
+        <a href="#packages"      class="btn btn-outline">View Packages ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>1000+</strong><span>Tests Available</span></div>
+        <div class="stat"><strong>24 Hr</strong><span>Report Delivery</span></div>
+        <div class="stat"><strong>FREE</strong><span>Home Collection</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hv-card">
+        <div class="hv-icon" style="background:rgba(244,132,95,.2);">🧪</div>
+        <div>
+          <h4>Full Body Advanced</h4>
+          <p>70+ Parameters incl. Vitamins & Thyroid</p>
+        </div>
+        <div class="price-tag">₹1999</div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-icon" style="background:rgba(61,184,191,.2);">🩸</div>
+        <div>
+          <h4>Diabetic Care Package</h4>
+          <p>Sugar, HbA1c, Kidney & Lipid</p>
+        </div>
+        <div class="price-tag">₹699</div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-icon" style="background:rgba(232,197,71,.2);">⭐</div>
+        <div>
+          <h4>Platinum 80 Package</h4>
+          <p>80+ Parameters – Most Popular</p>
+        </div>
+        <div class="price-tag">₹2999</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ISO / Certifications Banner -->
+<div class="iso-banner">
+  <div class="container iso-inner">
+    <div class="iso-badge">
+      <div class="shield">🛡️</div>
+      <div class="iso-text">
+        <strong>ISO 9001:2015 Certified</strong>
+        <span>Quality Management System</span>
+      </div>
+    </div>
+    <div class="iso-divider"></div>
+    <div class="iso-badge">
+      <div class="shield">🏛️</div>
+      <div class="iso-text">
+        <strong>Central Government Registered</strong>
+        <span>Official Registration · India</span>
+      </div>
+    </div>
+    <div class="iso-divider"></div>
+    <ul class="iso-points">
+      <li>NABL-Standard Testing Protocols</li>
+      <li>Expert-Reviewed Reports</li>
+      <li>Trusted by Thousands of Families</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Why Us -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <h2 class="section-title">Why Choose Hill Care?</h2>
+    <p class="section-sub">We bring certified, affordable diagnostics right to your home.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="icon">🏠</div>
+        <h3>Free Home Collection</h3>
+        <p>Our trained phlebotomists come to you — anywhere in Hyderabad. Zero travel, zero queues.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">☁️</div>
+        <h3>Cloud Reports</h3>
+        <p>Digital reports sent instantly to WhatsApp & email. Access them anywhere, anytime.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">💰</div>
+        <h3>Up to 70% Off</h3>
+        <p>Premium packages at unbeatable prices. Extra 20% for women & senior citizens.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">🛡️</div>
+        <h3>ISO 9001:2015 Certified</h3>
+        <p>We are ISO certified and centrally registered — assuring the highest quality standards.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">⚡</div>
+        <h3>Fast Turnaround</h3>
+        <p>Most reports within 24 hours. Urgent tests available on request.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon">🧬</div>
+        <h3>1000+ Tests</h3>
+        <p>From routine CBC to advanced genetic tests — if it's done in India, we do it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="section process-section">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">Book your test in 3 simple steps.</p>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Call or WhatsApp</h3>
+        <p>Tell us which test or package you need.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Home Collection</h3>
+        <p>Our phlebotomist arrives at your door.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Get Reports</h3>
+        <p>Digital reports on WhatsApp within 24 hrs.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Doctor Consult</h3>
+        <p>Free doctor consultation with select packages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Packages -->
+<section id="packages" class="section packages-section">
+  <div class="container">
+    <h2 class="section-title">Health Checkup Packages</h2>
+    <p class="section-sub">Transparent pricing. No hidden fees. Free home collection on every package.</p>
+    <div class="pkg-grid">
+
+      <div class="pkg">
+        <div class="pkg-name">Essential Checkup</div>
+        <div class="pkg-tests">25+ Tests</div>
+        <div class="pkg-price"><strong>₹899</strong> <s>₹1800</s> <span class="pkg-save">Save ₹901</span></div>
+        <ul>
+          <li>CBC, Sugar, HbA1c</li>
+          <li>Lipid, Liver, Kidney Profile</li>
+          <li>Thyroid TSH</li>
+          <li>Free Home Collection</li>
+          <li>WhatsApp Report Delivery</li>
+        </ul>
+        <a href="tel:8142271403" class="pkg-btn">Book Now</a>
+      </div>
+
+      <div class="pkg">
+        <div class="pkg-name">Diabetic Care</div>
+        <div class="pkg-tests">15+ Tests</div>
+        <div class="pkg-price"><strong>₹699</strong> <s>₹1500</s> <span class="pkg-save">Save ₹801</span></div>
+        <ul>
+          <li>Sugar, HbA1c</li>
+          <li>Urine Microalbumin</li>
+          <li>Lipid & Kidney Profile</li>
+          <li>Free Diet Chart</li>
+          <li>Free Home Collection</li>
+        </ul>
+        <a href="tel:8142271403" class="pkg-btn">Book Now</a>
+      </div>
+
+      <div class="pkg">
+        <div class="pkg-name">Full Body Advanced</div>
+        <div class="pkg-tests">70+ Tests</div>
+        <div class="pkg-price"><strong>₹1999</strong> <s>₹4500</s> <span class="pkg-save">Save ₹2501</span></div>
+        <ul>
+          <li>Vitamin D & B12</li>
+          <li>Thyroid Full, Iron Profile</li>
+          <li>Liver, Kidney, Lipid</li>
+          <li>Free Doctor Consultation</li>
+          <li>Free Home Collection</li>
+        </ul>
+        <a href="tel:8142271403" class="pkg-btn">Book Now</a>
+      </div>
+
+      <div class="pkg featured">
+        <div class="pkg-name">Platinum 80 Package</div>
+        <div class="pkg-tests">80+ Parameters</div>
+        <div class="pkg-price"><strong>₹2999</strong> <s>₹8900</s> <span class="pkg-save">Save ₹5900</span></div>
+        <ul>
+          <li>Vitamin D, B12, Folate, CA-125</li>
+          <li>Thyroid Full Panel</li>
+          <li>LFT, KFT, Iron Profile</li>
+          <li>HbA1c, Urine, Haemogram</li>
+          <li>Free Doctor Consultation</li>
+          <li>Free Home Collection</li>
+        </ul>
+        <a href="tel:8142271403" class="pkg-btn">Book @ ₹2999</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Special Offers -->
+<section class="section offers-section">
+  <div class="container">
+    <h2 class="section-title">Special Offers</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.7);">Exclusive deals designed for every member of your family.</p>
+    <div class="offers-grid">
+
+      <div class="offer-card">
+        <div class="oc-icon">👩</div>
+        <h3>Women's Special</h3>
+        <div class="oc-pct">20% OFF</div>
+        <p>On all packages & individual tests. Covers Thyroid, PCOD, Hormones, Vitamin D, and Bone Health.</p>
+        <a href="tel:8142271403" class="oc-btn">Claim Offer</a>
+      </div>
+
+      <div class="offer-card">
+        <div class="oc-icon">👴</div>
+        <h3>Senior Citizens</h3>
+        <div class="oc-pct">20% OFF</div>
+        <p>For customers above 60 years. Priority home collection and extra care assured.</p>
+        <a href="tel:8142271403" class="oc-btn">Claim Offer</a>
+      </div>
+
+      <div class="offer-card">
+        <div class="oc-icon">👨‍👩‍👧‍👦</div>
+        <h3>Family Package</h3>
+        <div class="oc-pct" style="font-size:28px;">For 4 Members</div>
+        <p>Full Body Checkup for your entire family at just ₹6999. Save ₹8600. One visit, all done.</p>
+        <a href="tel:8142271403" class="oc-btn">Book Family Pack</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- All Tests -->
+<section class="section tests-section">
+  <div class="container">
+    <h2 class="section-title">We Do ALL Tests Available in India</h2>
+    <p class="section-sub">From routine to advanced diagnostics — home sample collection for every single test.</p>
+    <div class="test-grid">
+      <div class="test-cat"><h4>Blood Tests</h4><p>CBC, ESR, Blood Group, Hemogram</p></div>
+      <div class="test-cat"><h4>Diabetes</h4><p>Sugar, HbA1c, Insulin, GTT</p></div>
+      <div class="test-cat"><h4>Thyroid</h4><p>TSH, T3, T4, FT3, FT4, Anti-TPO</p></div>
+      <div class="test-cat"><h4>Heart</h4><p>Lipid Profile, Troponin, CK-MB, Homocysteine</p></div>
+      <div class="test-cat"><h4>Liver</h4><p>LFT, Bilirubin, SGOT, SGPT, GGT</p></div>
+      <div class="test-cat"><h4>Kidney</h4><p>KFT, Creatinine, Urea, Uric Acid, eGFR</p></div>
+      <div class="test-cat"><h4>Vitamins</h4><p>Vitamin D, B12, Folate, Calcium, Iron</p></div>
+      <div class="test-cat"><h4>Hormones</h4><p>Testosterone, Estrogen, Progesterone, FSH, LH, Prolactin</p></div>
+      <div class="test-cat"><h4>Women's Health</h4><p>PCOD Profile, CA-125, Pap Smear, AMH</p></div>
+      <div class="test-cat"><h4>Cancer Markers</h4><p>PSA, CEA, AFP, CA 19-9, CA 15-3</p></div>
+      <div class="test-cat"><h4>Infections</h4><p>Dengue, Malaria, Typhoid, TB, HIV, HBsAg, HCV</p></div>
+      <div class="test-cat"><h4>Urine & Stool</h4><p>Routine, Culture, Microalbumin, Occult Blood</p></div>
+      <div class="test-cat"><h4>Allergy</h4><p>Food Panel, Dust Panel, IgE Total</p></div>
+      <div class="test-cat"><h4>Genetic</h4><p>Karyotyping, Thalassemia, NIPT</p></div>
+      <div class="test-cat"><h4>Other Tests</h4><p>COVID RT-PCR, D-Dimer, CRP, RA Factor, ANA</p></div>
+    </div>
+    <p style="text-align:center;margin-top:32px;font-weight:700;color:var(--teal);">Don't see your test? Call us — we do 1000+ tests!</p>
+    <div style="text-align:center;margin-top:18px;">
+      <a href="tel:8142271403" class="btn btn-accent">Ask for Your Test</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-wrap" style="margin-bottom:14px;">
+          <div class="logo-icon">🏥</div>
+          <div class="logo-text">
+            <strong>Hill Care Diagnostic</strong>
+            <small style="opacity:.65;">Cloud Diagnostic Services</small>
+          </div>
+        </div>
+        <p>ISO 9001:2015 Certified & Central Government Registered. Trusted diagnostics delivered to your home across Hyderabad.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#packages">Health Packages</a></li>
+          <li><a href="#">All Tests</a></li>
+          <li><a href="#">Special Offers</a></li>
+          <li><a href="#">Book Home Collection</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>📞 <a href="tel:8142271403">8142271403</a></li>
+          <li>💬 <a href="https://wa.me/918142271403">WhatsApp Us</a></li>
+          <li>📍 Serving All Areas of Hyderabad</li>
+          <li>⏰ Open 7 Days, 6 AM – 10 PM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Hill Care Diagnostic. All rights reserved.</p>
+      <p>ISO 9001:2015 Certified · Central Govt. Registered · Hyderabad</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/918142271403?text=Hi%2C%20I%20want%20to%20book%20a%20health%20checkup" class="wa-float" target="_blank" rel="noopener" title="Chat on WhatsApp">💬</a>
+
+<!-- Mobile call bar -->
+<a href="tel:8142271403" class="call-bar">📞 Call Now to Book: 8142271403</a>
+
+</body>
+</html>
